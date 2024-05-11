@@ -1,0 +1,1 @@
+python caafe/main.py $1 2>&1 | grep -v "Warning" | grep -v "warnings"
