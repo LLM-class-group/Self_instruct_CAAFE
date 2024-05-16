@@ -247,7 +247,7 @@ def generate_features(
             accs += [result_extended["acc"]]
             rocs += [result_extended["roc"]]
         # also return new df
-        return None, rocs, accs, old_rocs, old_accs, copy.deepcopy(df_train_extended)
+        return None, rocs, accs, old_rocs, old_accs, copy.deepcopy(df_train)
 
     messages = [
         {

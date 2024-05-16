@@ -19,12 +19,17 @@ from data import (load_all_data,
 
 import sys
 
+# color
+YELLOW = '\033[93m'
+BLUE = '\033[94m'
+ENDC = '\033[0m'  # reset
+
 # 读取命令行参数
 id = int(sys.argv[1])
 
-print("################################### LOAD DATA ############################################")
 metric_used = tabular_metrics.auc_metric
 cc_test_datasets_multiclass = load_all_data()
+print(f"################################### load in {len(cc_test_datasets_multiclass)} data ############################################")
 
 ds = cc_test_datasets_multiclass[id]
 ds, df_train, df_test, _, _ = get_data_split(ds, seed=0)
@@ -77,11 +82,6 @@ roc_test = tabpfn.scripts.tabular_metrics.auc_metric(test_y, pred_p_test)
 
 # acc_test = accuracy_score(pred_test, test_y)
 # # acc_train = accuracy_score(pred_train, train_y)
-
-# color
-YELLOW = '\033[93m'
-BLUE = '\033[94m'
-ENDC = '\033[0m'  # reset
 
 # print(pred_p_test)
 # print(pred)

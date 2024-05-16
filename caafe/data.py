@@ -12,7 +12,8 @@ import copy
 ### OpenML Data Loading ###
 
 
-def get_openml_classification(did, max_samples, multiclass=True, shuffled=True): # load classification data set from OpenML
+# load classification data set from OpenML
+def get_openml_classification(did, max_samples, multiclass=True, shuffled=True):
     """Load an openml dataset and return the data in the correct format."""
     dataset = openml.datasets.get_dataset(did)
     X, y, categorical_indicator, attribute_names = dataset.get_data(
@@ -36,8 +37,9 @@ def get_openml_classification(did, max_samples, multiclass=True, shuffled=True):
     if not shuffled:
         sort = np.argsort(y) if y.mean() < 0.5 else np.argsort(-y)
         pos = int(y.sum()) if y.mean() < 0.5 else int((1 - y).sum())
-        X, y = X[sort][-pos * 2 :], y[sort][-pos * 2 :]
-        y = torch.tensor(y).reshape(2, -1).transpose(0, 1).reshape(-1).flip([0]).float()
+        X, y = X[sort][-pos * 2:], y[sort][-pos * 2:]
+        y = torch.tensor(y).reshape(2, -1).transpose(0,
+                                                     1).reshape(-1).flip([0]).float()
         X = (
             torch.tensor(X)
             .reshape(2, -1, X.shape[1])
@@ -60,7 +62,7 @@ def get_openml_classification(did, max_samples, multiclass=True, shuffled=True):
         list(np.where(categorical_indicator)[0]),
         attribute_names + [list(dataset.features.values())[-1].name],
         description,
-    ) # return X, y, categorical indicator(which feats are category feats), description
+    )  # return X, y, categorical indicator(which feats are category feats), description
 
 
 def load_openml_list(
@@ -115,7 +117,8 @@ def load_openml_list(
         if X.shape[1] > num_feats:
             if return_capped:
                 X = X[:, 0:num_feats]
-                categorical_feats = [c for c in categorical_feats if c < num_feats]
+                categorical_feats = [
+                    c for c in categorical_feats if c < num_feats]
                 modifications["feats_capped"] = True
             else:
                 print("Too many features")
@@ -164,7 +167,8 @@ def refactor_openml_description(description):
     ]
     sel = ~np.array(
         [
-            np.array([blacklist_ in splits[i] for blacklist_ in blacklist]).any()
+            np.array([blacklist_ in splits[i]
+                     for blacklist_ in blacklist]).any()
             for i in range(len(splits))
         ]
     )
@@ -174,7 +178,8 @@ def refactor_openml_description(description):
     blacklist = ["Relevant Papers"]
     sel = ~np.array(
         [
-            np.array([blacklist_ in splits[i] for blacklist_ in blacklist]).any()
+            np.array([blacklist_ in splits[i]
+                     for blacklist_ in blacklist]).any()
             for i in range(len(splits))
         ]
     )
@@ -182,14 +187,14 @@ def refactor_openml_description(description):
     return description
 
 
-def get_X_y(df_train, target_name): # extract X and y from a dataframe
+def get_X_y(df_train, target_name):  # extract X and y from a dataframe
     y = torch.tensor(df_train[target_name].astype(int).to_numpy())
     x = torch.tensor(df_train.drop(target_name, axis=1).to_numpy())
 
     return x, y
 
 
-def get_data_split(ds, seed): # split the data into train and test
+def get_data_split(ds, seed):  # split the data into train and test
     def get_df(X, y):
         df = pd.DataFrame(
             data=np.concatenate([X, np.expand_dims(y, -1)], -1), columns=ds[4]
@@ -217,14 +222,14 @@ def get_data_split(ds, seed): # split the data into train and test
 
     df_test_old = copy.deepcopy(df_test)
     df_train_old = copy.deepcopy(df_train)
-    data_dir = os.environ.get("DATA_DIR", "data/")
-    source = "" if ds[0].startswith("kaggle") else "openml_"
-    path = f"{data_dir}/dataset_descriptions/{source}{ds[0]}.txt"
-    try:
-        with open(path) as f:
-            ds[-1] = f.read()
-    except:
-        print(f"Using initial description (tried reading {path})")
+    # data_dir = os.environ.get("DATA_DIR", "data/")
+    # source = "" if ds[0].startswith("kaggle") else "openml_"
+    # path = f"{data_dir}/dataset_descriptions/{source}{ds[0]}.txt"
+    # try:
+    #     with open(path) as f:
+    #         ds[-1] = f.read()
+    # except:
+    #     print(f"Using initial description (tried reading {path})")
 
     return ds, df_train, df_test, df_train_old, df_test_old
 
@@ -234,13 +239,15 @@ def load_kaggle():
     for name in kaggle_dataset_ids:
         try:
             df_all = pd.read_csv(f"datasets_kaggle/{name[0]}/{name[1]}.csv")
-            df_train, df_test = train_test_split(df_all, test_size=0.25, random_state=0)
+            df_train, df_test = train_test_split(
+                df_all, test_size=0.25, random_state=0)
             ds = [
                 "kaggle_" + name[0],
                 df_all.copy().drop(columns=[name[2]], inplace=False).values,
                 df_all[name[2]].values,
                 [],
-                df_train.copy().drop(columns=[name[2]], inplace=False).columns.tolist()
+                df_train.copy().drop(
+                    columns=[name[2]], inplace=False).columns.tolist()
                 + [name[2]],
                 "",
             ]
@@ -261,7 +268,8 @@ def load_kaggle():
     for name in kaggle_competition_ids:
         try:
             df_all = pd.read_csv(f"datasets_kaggle/{name}/train.csv")
-            df_train, df_test = train_test_split(df_all, test_size=0.25, random_state=0)
+            df_train, df_test = train_test_split(
+                df_all, test_size=0.25, random_state=0)
             ds = [
                 "kaggle_" + name,
                 df_all[df_all.columns[:-1]].values,
@@ -279,7 +287,8 @@ def load_kaggle():
 
             cc_test_datasets_multiclass += [ds]
         except:
-            print(f"{name} at datasets_kaggle/{name}/train.csv not found, skipping...")
+            print(
+                f"{name} at datasets_kaggle/{name}/train.csv not found, skipping...")
 
     return cc_test_datasets_multiclass
 
@@ -290,12 +299,12 @@ def load_all_data():
         multiclass=True,
         shuffled=True,
         filter_for_nan=False,
-        max_samples=10000,
-        num_feats=25,
+        max_samples=2500,
+        num_feats=50,
         return_capped=False,
     )
 
-    cc_test_datasets_multiclass += load_kaggle()
+    # cc_test_datasets_multiclass += load_kaggle()
 
     return postprocess_datasets(cc_test_datasets_multiclass)
 
@@ -322,14 +331,15 @@ def postprocess_datasets(cc_test_datasets_multiclass):
             # df.loc[:, (df.dtypes == object)] = df.loc[:, (df.dtypes != object)].fillna(False)
             df = df.dropna()
 
-        df.loc[:, (df.dtypes == object)] = df.loc[:, (df.dtypes == object)].fillna("")
+        df.loc[:, (df.dtypes == object)] = df.loc[:,
+                                                  (df.dtypes == object)].fillna("")
 
         l = len(df)
         l = min(l, 2000)
         df = df.sample(frac=1)
 
-        ds[1] = df.values[0 : int(p * l), :-1]
-        ds[2] = df.values[0 : int(p * l), -1]
+        ds[1] = df.values[0: int(p * l), :-1]
+        ds[2] = df.values[0: int(p * l), -1]
 
     return cc_test_datasets_multiclass
 
@@ -345,15 +355,24 @@ kaggle_dataset_ids = [  # Format: (Dataset ID, Dataset Name, Target Column, User
     ("pharyngitis", "pharyngitis", "radt", "yoshifumimiya"),
 ]
 
-benchmark_ids = [
-    11,
-    15,
-    23,
-    31,
-    37,
-    50,
-    188,
-    1068,
-    1169,
-    41027,
-]
+multi_class_benchmark_ids = [3, 6, 14, 15, 16,
+                             22, 28, 31, 32, 38,
+                             44, 56, 174, 182, 185,
+                             307, 312, 328, 377, 474,
+                             740, 764, 802, 811, 814,
+                             824, 838, 846, 855, 884,
+                             896, 910, 913, 914, 919,
+                             924, 926, 936, 943, 958,
+                             983, 1005, 1016, 1049, 1050,
+                             1065, 1067, 1068, 1100, 1116,
+                             1120, 1220, 1446, 1461, 1468,
+                             1471, 1472, 1479, 1482, 1485,
+                             1487, 1491, 1492, 1493, 1494,
+                             1498, 1501, 1504, 1547, 1552,
+                             1554, 4135, 4329, 4534, 6332,
+                             23381, 40702, 40710, 40971, 40984,
+                             41496, 42223, 44237, 44238, 44239,
+                             44240, 44241, 44242, 44313, 44314,
+                             44315, 44484, 45102, 45711, 45712, 45717]
+
+benchmark_ids = multi_class_benchmark_ids
