@@ -202,7 +202,7 @@ def generate_features(
             except Exception as e:
                 display_method(f"Error in code execution. {type(e)} {e}")
                 display_method(f"```python\n{format_for_display(code)}\n```\n")
-                return e, None, None, None, None
+                return e, None, None, None, None, None
 
             # Add target column back to df_train
             df_train[ds[4][-1]] = target_train
@@ -246,7 +246,8 @@ def generate_features(
             old_rocs += [result_old["roc"]]
             accs += [result_extended["acc"]]
             rocs += [result_extended["roc"]]
-        return None, rocs, accs, old_rocs, old_accs
+        # also return new df
+        return None, rocs, accs, old_rocs, old_accs, copy.deepcopy(df_train_extended)
 
     messages = [
         {
@@ -275,7 +276,7 @@ def generate_features(
         i = i + 1
         display_method("\n"
                        + f"\033[31m*Iteration {i}*\n\033[0m")
-        e, rocs, accs, old_rocs, old_accs = execute_and_evaluate_code_block(
+        e, rocs, accs, old_rocs, old_accs, df_extended = execute_and_evaluate_code_block(
             full_code, code
         )
         if e is not None:
@@ -302,10 +303,10 @@ Next codeblock:
         improvement_acc = np.nanmean(accs) - np.nanmean(old_accs)
 
         #
-        # 
         #
         #
-        log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/test2.jsonl"
+        #
+        log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/good.jsonl"
 
         if improvement_roc > 0 and improvement_acc > 0:
             log_messages = [
@@ -315,7 +316,7 @@ Next codeblock:
                 },
                 {
                     "role": "user",
-                    "content": build_prompt_from_df(ds, df, iterative=iterative),
+                    "content": build_prompt_from_df(ds, df_extended, iterative=iterative),
                 },
             ]
 
