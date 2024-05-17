@@ -1,7 +1,7 @@
 import copy
 import numpy as np
 
-from client import chat_complete
+from client import chat_complete, get_time, print_important
 from sklearn.model_selection import RepeatedKFold
 from caafe_evaluate import (
     evaluate_dataset,
@@ -265,15 +265,20 @@ def generate_features(
     full_code = ""
 
     i = 0
+    success = 0
+    query = 0
     # pure_messages: exclude error messages
     pure_messages = messages
     while i < n_iter:
         try:
+            query = query + 1
             code = generate_code(messages)
         except Exception as e:
             display_method("Error in LLM API." + str(e))
             continue
         i = i + 1
+        print_important(
+            f"Start feature generate iteration {i} at {get_time()}")
         display_method("\n"
                        + f"\033[31m*Iteration {i}*\n\033[0m")
         e, rocs, accs, old_rocs, old_accs, df_extended = execute_and_evaluate_code_block(
@@ -308,7 +313,8 @@ Next codeblock:
         #
         log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/good.jsonl"
 
-        if improvement_roc > 0 and improvement_acc > 0:
+        if improvement_roc + improvement_acc > 0:
+            success = success + 1
             log_messages = [
                 {
                     "role": "system",
@@ -354,7 +360,6 @@ Next codeblock:
             + f"{add_feature_sentence}\n"
             + f"\n"
         )
-
         if len(code) > 10:
             messages = pure_messages + [
                 {"role": "assistant", "content": code},
@@ -368,4 +373,9 @@ Next codeblock:
         if add_feature:
             full_code += code
         pure_messages = messages
+
+    # finished generation_features
+    print_important(
+        f"Feature generation finished with {success} good features out of {query} queries at {get_time()}. Success rate: {success/query}")
+
     return full_code, prompt, messages

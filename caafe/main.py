@@ -14,13 +14,15 @@ from tabpfn.scripts import tabular_metrics
 from functools import partial
 from data import (load_all_data,
                   get_data_split,
-                  get_X_y
-                  )
+                  get_X_y)
 
 import sys
+from client import get_time, print_important
+
+default_repeats = 2
 
 
-def process(id):
+def process(id, repeats=default_repeats):
     ds = cc_test_datasets_multiclass[id]
     ds, df_train, df_test, _, _ = get_data_split(ds, seed=0)
     target_column_name = ds[4][-1]
@@ -28,7 +30,7 @@ def process(id):
     df_train, df_test = make_datasets_numeric(
         df_train, df_test, target_column_name)
     train_x, train_y = get_X_y(df_train, target_column_name)
-    test_x, test_y = get_X_y(df_test, target_column_name)
+    # test_x, test_y = get_X_y(df_test, target_column_name)
 
     # Setup Base Classifier
 
@@ -41,71 +43,55 @@ def process(id):
     # pred = clf_no_feat_eng.predict(test_x)
     # acc = accuracy_score(pred, test_y)
 
-    pred = clf_no_feat_eng.predict_proba(test_x)
-    acc = tabpfn.scripts.tabular_metrics.accuracy_metric(test_y, pred)
-    roc = tabpfn.scripts.tabular_metrics.auc_metric(test_y, pred)
+    # pred = clf_no_feat_eng.predict_proba(test_x)
+    # acc = tabpfn.scripts.tabular_metrics.accuracy_metric(test_y, pred)
+    # roc = tabpfn.scripts.tabular_metrics.auc_metric(test_y, pred)
 
     # Setup and Run CAAFE
+    for i in range(repeats):
+        print_important(
+            f"start process {id} at {get_time()} with repeats {i}")
+        caafe_clf = CAAFEClassifier(base_classifier=clf_no_feat_eng,
+                                    llm_model="gpt-4",
+                                    iterations=15)
 
-    caafe_clf = CAAFEClassifier(base_classifier=clf_no_feat_eng,
-                                llm_model="gpt-4",
-                                iterations=100)
+        caafe_clf.fit_pandas(df_train,
+                             target_column_name=target_column_name,
+                             dataset_description=dataset_description)
 
-    caafe_clf.fit_pandas(df_train,
-                         target_column_name=target_column_name,
-                         dataset_description=dataset_description)
-
-    # pred_p_test = caafe_clf.predict_proba(df_test)
-    # pred_p_train = caafe_clf.predict_proba(df_train)
-
-    # acc_test = tabpfn.scripts.tabular_metrics.accuracy_metric(test_y, pred_p_test)
-    # acc_train = tabpfn.scripts.tabular_metrics.accuracy_metric(train_y, pred_p_train)
-    # roc_test = tabpfn.scripts.tabular_metrics.auc_metric(test_y, pred_p_test)
-    # pred_test = caafe_clf.predict(df_test)
-    # pred_train = caafe_clf.predict(df_train)
-
-    # acc_test = accuracy_score(pred_test, test_y)
-    # # acc_train = accuracy_score(pred_train, train_y)
-
-    # print(pred_p_test)
-    # print(pred)
-    # print(caafe_clf.code)
-
-    # from datetime import datetime
-    # # 获取当前时间
-    # current_time = datetime.now()
-    # # 将关键信息输出到 main_output.txt
-    # output_path = "/home/jiahe/ML/Self_instruct_CAAFE/output/main_output.txt"
-    # with open(output_path, 'w') as f:
-    #     print(f"Processing CAAFE in dataset {id}", file=f)
-    #     print(f"Test accuracy before CAAFE {acc}", file=f)
-    #     print(f"Test accuracy after CAAFE {acc_test}", file=f)
-    #     print(f"Test ROC before CAAFE {roc}", file=f)
-    #     print(f"Test ROC after CAAFE {roc_test}", file=f)
-    #     print(f"Current time: {current_time}", file=f)
-
-    # print(f'Train accuracy after CAAFE {acc_train}')
+    print_important(f"finish process {id} at {get_time()}")
 
 
-# color
-YELLOW = '\033[93m'
-BLUE = '\033[94m'
-ENDC = '\033[0m'  # reset
+def safe_process(id, repeats=default_repeats):
+    try:
+        process(id, repeats)
+    except Exception as e:
+        print_important(
+            f"error in process {id} at {get_time()} with error {e}")
 
 
 # 读取命令行参数
 run_all = bool(sys.argv[1])
-id = int(sys.argv[2])
+iteration_time = int(sys.argv[2])
+id = int(sys.argv[3])
+
+print_important(
+    f"start running main.py with run_all: {run_all}, iteration_time: {iteration_time}, id: {id} at {get_time()}")
 
 metric_used = tabular_metrics.auc_metric
 cc_test_datasets_multiclass = load_all_data()
-print(
+print_important(
     f"################################### LOAD IN {len(cc_test_datasets_multiclass)} DATASET ############################################")
 
 if run_all:
-    for id in range(len(cc_test_datasets_multiclass)):
-        process(id)
+    for i in range(0, iteration_time):
+        if i == 0:
+            for idx in range(id, len(cc_test_datasets_multiclass)):
+                safe_process(idx)
+        else:
+            for idx in range(len(cc_test_datasets_multiclass)):
+                safe_process(idx)
+
+        print_important(f"finish pass {i} at {get_time()}")
 else:
     process(id)
-
-

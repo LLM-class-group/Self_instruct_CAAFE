@@ -76,6 +76,7 @@ def load_openml_list(
     shuffled=True,
     return_capped=False,
 ):
+    i = 0
     """Load a list of openml datasets and return the data in the correct format."""
     datasets = []
     openml_list = openml.datasets.list_datasets(dids)
@@ -138,7 +139,8 @@ def load_openml_list(
             else:
                 print(f"Too many classes")
                 continue
-
+        i += 1
+        print(i)
         datasets += [
             [
                 entry["name"],
@@ -363,7 +365,7 @@ multi_class_benchmark_ids = [3, 6, 14, 15, 16,
                              824, 838, 846, 855, 884,
                              896, 910, 913, 914, 919,
                              924, 926, 936, 943, 958,
-                             983, 1005, 1016, 1049, 1050,
+                             983, 1005, 1016, 1049, 
                              1065, 1067, 1068, 1100, 1116,
                              1120, 1220, 1446, 1461, 1468,
                              1471, 1472, 1479, 1482, 1485,
@@ -371,8 +373,7 @@ multi_class_benchmark_ids = [3, 6, 14, 15, 16,
                              1498, 1501, 1504, 1547, 1552,
                              1554, 4135, 4329, 4534, 6332,
                              23381, 40702, 40710, 40971, 40984,
-                             41496, 42223, 44237, 44238, 44239,
-                             44240, 44241, 44242, 44313, 44314,
-                             44315, 44484, 45102, 45711, 45712, 45717]
+                             44484, 45102, 45711, 45712, 45717]
 
 benchmark_ids = multi_class_benchmark_ids
+# 1050
