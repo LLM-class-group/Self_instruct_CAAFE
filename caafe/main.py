@@ -4,6 +4,7 @@ from sklearn_wrapper import CAAFEClassifier
 # Fast Automated Machine Learning method for small tabular datasets
 from tabpfn import TabPFNClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import HistGradientBoostingClassifier as MyClassifier
 
 import os
 import tabpfn
@@ -34,7 +35,8 @@ def process(id, repeats=default_repeats):
 
     # Setup Base Classifier
 
-    # clf_no_feat_eng = RandomForestClassifier()
+    # clf_no_feat_eng = MyClassifier(max_iter=100)
+
     clf_no_feat_eng = TabPFNClassifier(device=(
         'cuda' if torch.cuda.is_available() else 'cpu'), N_ensemble_configurations=4)
     clf_no_feat_eng.fit = partial(clf_no_feat_eng.fit, overwrite_warning=True)
@@ -48,18 +50,17 @@ def process(id, repeats=default_repeats):
     # roc = tabpfn.scripts.tabular_metrics.auc_metric(test_y, pred)
 
     # Setup and Run CAAFE
+    print_important(f"[{id}] dataset start at {get_time()}")
     for i in range(repeats):
-        print_important(
-            f"start process {id} at {get_time()} with repeats {i}")
+        print_important(f"####### start cycle {i} at {get_time()} ########")
         caafe_clf = CAAFEClassifier(base_classifier=clf_no_feat_eng,
                                     llm_model="gpt-4",
-                                    iterations=15)
+                                    iterations=10)
 
         caafe_clf.fit_pandas(df_train,
                              target_column_name=target_column_name,
                              dataset_description=dataset_description)
 
-    print_important(f"finish process {id} at {get_time()}")
 
 
 def safe_process(id, repeats=default_repeats):
@@ -67,11 +68,13 @@ def safe_process(id, repeats=default_repeats):
         process(id, repeats)
     except Exception as e:
         print_important(
-            f"error in process {id} at {get_time()} with error {e}")
+            f"error in dataset {id} at {get_time()} with error {e}")
 
+def str_to_bool(s):
+    return s.lower() in ('true', '1', 't', 'y', 'yes')
 
 # 读取命令行参数
-run_all = bool(sys.argv[1])
+run_all = str_to_bool(sys.argv[1])
 iteration_time = int(sys.argv[2])
 id = int(sys.argv[3])
 
@@ -91,7 +94,7 @@ if run_all:
         else:
             for idx in range(len(cc_test_datasets_multiclass)):
                 safe_process(idx)
-
-        print_important(f"finish pass {i} at {get_time()}")
+        print_important(f"################################### finish all datasets at {get_time()} for interation {i}############################################")
+        
 else:
     process(id)

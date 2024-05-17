@@ -61,6 +61,13 @@ def get_time():
     return standardized_time
 
 
+def get_time_in_float():
+    current_time = datetime.now()
+    # 转换为时间戳并返回 float 类型
+    timestamp = current_time.timestamp()
+    return float(timestamp)
+
+
 log_file_path = 'caafe/log/important.txt'
 with open(log_file_path, 'w') as log_file:
     log_file.write('')

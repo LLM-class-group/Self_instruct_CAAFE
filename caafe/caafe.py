@@ -1,7 +1,7 @@
 import copy
 import numpy as np
 
-from client import chat_complete, get_time, print_important
+from client import chat_complete, get_time, print_important, get_time_in_float
 from sklearn.model_selection import RepeatedKFold
 from caafe_evaluate import (
     evaluate_dataset,
@@ -270,6 +270,10 @@ def generate_features(
     # pure_messages: exclude error messages
     pure_messages = messages
     while i < n_iter:
+        time_0 = get_time_in_float()
+        print_important(
+            f"----- Start feature iteration {i+1} at {get_time()} -----")
+
         try:
             query = query + 1
             code = generate_code(messages)
@@ -277,10 +281,11 @@ def generate_features(
             display_method("Error in LLM API." + str(e))
             continue
         i = i + 1
+
+        time_1 = get_time_in_float()
         print_important(
-            f"Start feature generate iteration {i} at {get_time()}")
-        display_method("\n"
-                       + f"\033[31m*Iteration {i}*\n\033[0m")
+            f"feature generation spend time: {float(time_1) - float(time_0)}")
+
         e, rocs, accs, old_rocs, old_accs, df_extended = execute_and_evaluate_code_block(
             full_code, code
         )
@@ -307,13 +312,19 @@ Next codeblock:
         improvement_roc = np.nanmean(rocs) - np.nanmean(old_rocs)
         improvement_acc = np.nanmean(accs) - np.nanmean(old_accs)
 
+        time_2 = get_time_in_float()
+        print_important(
+            f"execute code and evaluate spend time: {float(time_2) - float(time_1)}")
+
         #
-        #
-        #
+        # ------------------------------
+        # log good results
+        # ------------------------------
         #
         log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/good.jsonl"
 
         if improvement_roc + improvement_acc > 0:
+            print_important(f"!! Log one good response from LLM !!")
             success = success + 1
             log_messages = [
                 {
@@ -341,8 +352,8 @@ Next codeblock:
             except Exception as e:
                 print(f"Warning: Could not write to log file: {e}")
         #
-        #
-        #
+        # ------------------------------
+        # ------------------------------
         #
 
         add_feature = True
@@ -376,6 +387,6 @@ Next codeblock:
 
     # finished generation_features
     print_important(
-        f"Feature generation finished with {success} good features out of {query} queries at {get_time()}. Success rate: {success/query}")
+        f"#### cycle finished with {success} good codes out of {query} queries at {get_time()}. Success rate: {success/query} #####")
 
     return full_code, prompt, messages

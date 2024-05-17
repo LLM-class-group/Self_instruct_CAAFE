@@ -301,9 +301,9 @@ def load_all_data():
         multiclass=True,
         shuffled=True,
         filter_for_nan=False,
-        max_samples=2500,
-        num_feats=50,
-        return_capped=False,
+        max_samples=500,
+        num_feats=30,
+        return_capped=True,
     )
 
     # cc_test_datasets_multiclass += load_kaggle()
