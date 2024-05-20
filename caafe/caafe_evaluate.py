@@ -7,10 +7,10 @@ from preprocessing import make_datasets_numeric, make_dataset_numeric
 from sklearn.base import BaseEstimator
 
 
+# 用于评估一个数据集，返回分类器的准确率和ROC AUC。
 def evaluate_dataset(
     df_train: pd.DataFrame,
     df_test: pd.DataFrame,
-    prompt_id,
     name,
     method,
     metric_used,
@@ -99,7 +99,6 @@ def evaluate_dataset(
     return {
         "acc": float(acc.numpy()),
         "roc": float(roc.numpy()),
-        "prompt": prompt_id,
         "seed": seed,
         "name": name,
         "size": len(df_train),
@@ -109,6 +108,7 @@ def evaluate_dataset(
     }
 
 
+#计算每个特征的重要性，通过逐个删除特征并评估对模型性能的影响来确定。
 def get_leave_one_out_importance(
     df_train, df_test, ds, method, metric_used, max_time=30
 ):
@@ -117,7 +117,6 @@ def get_leave_one_out_importance(
         ds,
         df_train,
         df_test,
-        prompt_id="",
         name=ds[0],
         method=method,
         metric_used=metric_used,
@@ -136,7 +135,6 @@ def get_leave_one_out_importance(
             ds_,
             df_train_,
             df_test_,
-            prompt_id="",
             name=ds[0],
             method=method,
             metric_used=metric_used,

@@ -25,15 +25,9 @@ Description of the dataset in `df` (column dtypes might be inaccurate):
 Columns in `df` (true feature dtypes listed here, categoricals encoded as int):
 {samples}
     
-This code was written by an expert datascientist working to improve predictions. It is a snippet of code that adds new columns to the dataset.
-Number of samples (rows) in training dataset: {int(len(df))}
-    
-This code generates additional columns that are useful for a downstream classification algorithm (such as XGBoost) predicting \"{ds[4][-1]}\".
-Additional columns add new semantic information, that is they use real world knowledge on the dataset. They can e.g. be feature combinations, transformations, aggregations where the new column is a function of the existing columns.
-The scale of columns and offset does not matter. Make sure all used columns exist. Follow the above description of columns closely and consider the datatypes and meanings of classes.
-This code also drops columns, if these may be redundant and hurt the predictive performance of the downstream classifier (Feature selection). Dropping columns may help as the chance of overfitting is lower, especially if the dataset is small.
-The classifier will be trained on the dataset with the generated columns and evaluated on a holdout set. The evaluation metric is accuracy. The best performing code will be selected.
-Added columns can be used in other codeblocks, dropped columns are not available anymore.
+This code, written by an expert data scientist, adds new columns to the dataset to improve downstream classification (e.g., XGBoost) predicting "{ds[4][-1]}".
+These columns incorporate real-world knowledge through feature combinations, transformations, and aggregations. Ensure all used columns exist. 
+Consider datatypes and meanings of classes. The code also performs feature selection by dropping redundant columns to avoid overfitting. The classifier will be trained and evaluated on accuracy. Added columns can be reused, dropped columns cannot.
 
 Code formatting for each added column:
 ```python
@@ -63,7 +57,7 @@ def build_prompt_from_df(ds, df, iterative=1):
     feature_importance = {}  # xgb_eval(_obj)
 
     samples = ""
-    df_ = df.head(10)
+    df_ = df.head(1)
     for i in list(df_):
         # show the list of values
         nan_freq = "%s" % float("%.2g" % (df[i].isna().mean() * 100))
@@ -71,7 +65,7 @@ def build_prompt_from_df(ds, df, iterative=1):
         if str(df[i].dtype) == "float64":
             s = [round(sample, 2) for sample in s]
         samples += (
-            f"{df_[i].name} ({df[i].dtype}): NaN-freq [{nan_freq}%], Samples {s}\n"
+            f"{df_[i].name} ({df[i].dtype}):Sample {s}\n"
         )
 
     kwargs = {
@@ -121,7 +115,27 @@ def generate_features(
     assert (
         iterative == 1 or metric_used is not None
     ), "metric_used must be set if iterative"
+    data_description = ds[-1]
+    simlify_messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant . You will simplify the data description,only preserve those which is critical for feature engineering. ",
+        },
+        {
+            "role": "user",
+            "content": "You are a helpful assistant . You will simplify the data description,only preserve those which is critical for feature engineering. You should only response the simplified description .Your answer should begin with \"```begin\" .Dataset description:\n"+data_description,
+        },
+    ]
 
+    _, simplified_description = chat_complete(
+        messages=simlify_messages,
+        stop=["```end"],
+        temperature=0.5,
+        max_tokens=500,
+    )
+    simplified_description =simplified_description.replace("```begin","").replace(
+            "```", "").replace("<end>", "")
+    ds[-1] = simplified_description
     prompt = build_prompt_from_df(ds, df, iterative=iterative)
 
     if just_print_prompt:
@@ -221,7 +235,6 @@ def generate_features(
                     result_old = evaluate_dataset(
                         df_train=df_train,
                         df_test=df_valid,
-                        prompt_id="XX",
                         name=ds[0],
                         method=iterative_method,
                         metric_used=metric_used,
@@ -232,7 +245,6 @@ def generate_features(
                     result_extended = evaluate_dataset(
                         df_train=df_train_extended,
                         df_test=df_valid_extended,
-                        prompt_id="XX",
                         name=ds[0],
                         method=iterative_method,
                         metric_used=metric_used,
@@ -321,7 +333,7 @@ Next codeblock:
         # log good results
         # ------------------------------
         #
-        log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/good.jsonl"
+        log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/test_prompt.jsonl"
 
         if improvement_roc + improvement_acc > 0:
             print_important(f"!! Log one good response from LLM !!")

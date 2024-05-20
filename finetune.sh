@@ -1,4 +1,4 @@
-export MODEL_NAME="llama3_lora_sft"
+export MODEL_NAME="llama3_lora_sft_v2"
 export DATA_DIR="data"
 export DATA_NAME="caafe_finetuning_data"
 export BASE_MODEL="/home/jiahe/model_cache/LLM-Research/Meta-Llama-3-8B-Instruct"
@@ -15,7 +15,7 @@ CUDA_VISIBLE_DEVICES=0 python \
     --template llama3 \
     --dataset_dir ${DATA_DIR} \
     --dataset ${DATA_NAME} \
-    --cutoff_len 1024 \
+    --cutoff_len 1120 \
     --learning_rate 0.0001 \
     --per_device_train_batch_size 1 \
     --gradient_accumulation_steps 16 \
@@ -24,8 +24,8 @@ CUDA_VISIBLE_DEVICES=0 python \
     --max_grad_norm 1.0 \
     --logging_steps 10 \
     --preprocessing_num_workers 16 \
-    --max_steps 2000 \
-    --save_steps 500 \
+    --max_steps 1600 \
+    --save_steps 400 \
     --warmup_steps 100 \
     --output_dir checkpoints/${MODEL_NAME} \
     --fp16 True \

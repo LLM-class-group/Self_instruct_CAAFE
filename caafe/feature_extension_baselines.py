@@ -82,12 +82,13 @@ def extend_using_autofeat(df_train, df_test, target_train):
     return df_train, df_test
 
 
-def extend_using_caafe(df_train, df_test, ds, seed, prompt_id, code_overwrite=None):
+def transform_data_with_code(df_train, df_test, ds, seed, code_overwrite=None):
     if code_overwrite:
         code = code_overwrite
     else:
+        #todo replace getting code from file to generate_feature
         data_dir = os.environ.get("DATA_DIR", "data/")
-        f = open(f"{data_dir}/generated_code/{ds[0]}_{prompt_id}_{seed}_code.txt", "r")
+        f = open(f"{data_dir}/generated_code/{ds[0]}_{seed}_code.txt", "r")
         code = f.read()
         f.close()
 
