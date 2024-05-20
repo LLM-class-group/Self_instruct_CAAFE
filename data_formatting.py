@@ -3,7 +3,7 @@ import json
 # 等跑完了改成good
 log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/good.jsonl"
 # 等跑完了改成目标目录
-output_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/better.jsonl"
+output_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/better.json"
 
 output_data=[]
 with open(log_path,"r") as f:
