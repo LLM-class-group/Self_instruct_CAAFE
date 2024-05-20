@@ -68,7 +68,7 @@ def get_time_in_float():
     return float(timestamp)
 
 
-log_file_path = 'caafe/log/important.txt'
+log_file_path = 'caafe/log/important.log'
 with open(log_file_path, 'w') as log_file:
     log_file.write('')
 

@@ -1,5 +1,5 @@
 __pycache__/
-log/
-oldlog/
+backup/
+LLaMA-Factory/
 
 *.log
