@@ -332,45 +332,45 @@ Next codeblock:
         print_important(
             f"execute code and evaluate spend time: {float(time_2) - float(time_1)}")
 
-        #
-        # ------------------------------
-        # log good results
-        # ------------------------------
-        #
-        log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/good2.jsonl"
+        # #
+        # # ------------------------------
+        # # log good results
+        # # ------------------------------
+        # #
+        # log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/good2.jsonl"
 
-        if improvement_roc > 0.001 and improvement_acc > 0.001:
-            print_important(f"!! Log one good response from LLM !!")
-            success = success + 1
-            log_messages = [
-                {
-                    "role": "system",
-                    "content": "You are an expert datascientist assistant solving Kaggle problems. You answer only by generating code. Answer as concisely as possible.",
-                },
-                {
-                    "role": "user",
-                    "content": build_prompt_from_df(ds, df_extended, iterative=iterative),
-                },
-            ]
+        # if improvement_roc > 0.001 and improvement_acc > 0.001:
+        #     print_important(f"!! Log one good response from LLM !!")
+        #     success = success + 1
+        #     log_messages = [
+        #         {
+        #             "role": "system",
+        #             "content": "You are an expert datascientist assistant solving Kaggle problems. You answer only by generating code. Answer as concisely as possible.",
+        #         },
+        #         {
+        #             "role": "user",
+        #             "content": build_prompt_from_df(ds, df_extended, iterative=iterative),
+        #         },
+        #     ]
 
-            log_entry = {
-                "messages": log_messages,
-                "response": code,
-                "improvement_roc": improvement_roc,
-                "improvement_acc": improvement_acc,
-            }
+        #     log_entry = {
+        #         "messages": log_messages,
+        #         "response": code,
+        #         "improvement_roc": improvement_roc,
+        #         "improvement_acc": improvement_acc,
+        #     }
 
-            try:
-                with open(log_path, "a") as log_file:
-                    import json
-                    json.dump(log_entry, log_file)
-                    log_file.write("\n")  # Add newline to separate entries
-            except Exception as e:
-                print(f"Warning: Could not write to log file: {e}")
-        #
-        # ------------------------------
-        # ------------------------------
-        #
+        #     try:
+        #         with open(log_path, "a") as log_file:
+        #             import json
+        #             json.dump(log_entry, log_file)
+        #             log_file.write("\n")  # Add newline to separate entries
+        #     except Exception as e:
+        #         print(f"Warning: Could not write to log file: {e}")
+        # #
+        # # ------------------------------
+        # # ------------------------------
+        # #
 
         add_feature = True
         add_feature_sentence = "The code was executed and changes to ´df´ were kept."

@@ -17,10 +17,10 @@ import numpy as np
 from data import get_data_split, load_all_data
 from caafe import generate_features
 from evaluate import evaluate_dataset_with_or_without_caafe
+from client import get_time
 
-sft = True
 generate = True
-dirname = "generated_code_sft2" if sft else "generated_code"
+dirname = "generated_code"
 
 
 def generate_and_save_feats(i, seed=0, iterative_method=None, iterations=10):
@@ -79,11 +79,18 @@ if __name__ == "__main__":
         type=bool,
         default=True,
     )
+    parser.add_argument(
+        "--sft",
+        type=bool,
+        default=True,
+    )
+
     args = parser.parse_args()
     dataset_id = args.dataset_id
     iterations = args.iterations
     seed = args.seed
     using_caafe = args.using_caafe
+    sft = args.sft
 
     model = ""
 
@@ -134,10 +141,15 @@ if __name__ == "__main__":
     auc_mean = [x / len(cc_test_datasets_multiclass) for x in auc_sum]
 
     with open("/home/jiahe/ML/Self_instruct_CAAFE/data/eval_result.txt", 'a') as eval_file:
+        eval_file.write(f"Eval result at:{get_time()}\n")
         if using_caafe:
-            eval_file.write(f"Using CAAFE:\n")
+            if sft:
+                eval_file.write(f"Using CAAFE after sft, ")
+            else:
+                eval_file.write(f"Using orginal CAAFE, ")
         else:
-            eval_file.write(f"No feature engineering:\n")
+            eval_file.write(f"No feature engineering, ")
+        eval_file.write(f"Seed: {seed}, Iterations: {iterations}\n")
         for i in range(0, len(methods)):
             if i == 0:
                 method = "TabPFN"

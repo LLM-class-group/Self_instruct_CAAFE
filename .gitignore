@@ -2,8 +2,9 @@ __pycache__/
 backup/
 LLaMA-Factory/
 AutogluonModels/
-data/generated_code_*/
+data/generated_code*/
 our_model/
+caafe2/
 
 *.log
 data/eval_result.txt

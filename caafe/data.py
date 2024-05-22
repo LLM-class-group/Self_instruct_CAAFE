@@ -143,8 +143,9 @@ def load_openml_list(
         i += 1
         print(i)
 
+        name = entry["name"]
         if simplify_description:
-            path = f"/home/jiahe/ML/Self_instruct_CAAFE/data/dataset_descriptions/openml_{entry["name"]}.txt"
+            path = f"/home/jiahe/ML/Self_instruct_CAAFE/data/dataset_descriptions/openml_{name}.txt"
             try:
                 with open(path) as f:
                     description = f.read()
