@@ -1,0 +1,16 @@
+
+# Halstead volume
+# Usefulness: Halstead volume is a measure of the complexity of the software, which can be indicative of defects
+# Input samples: loc: [109.0, 9.0, 91.0], v(g): [21.0, 4.0, 15.0]
+df['Halstead_Volume'] = df['v(g)'] * df['E']
+
+# Halstead difficulty
+# Usefulness: Halstead difficulty is a measure of the complexity of the software, which can be indicative of defects
+# Input samples: loc: [109.0, 9.0, 91.0], v(g): [21.0, 4.0, 15.0], E: [72282.68, 0.0, 72282.68]
+df['Halstead_Difficulty'] = df['v(g)'] * df['E'] / df['loc']# Total operations per line
+# Usefulness: Higher operations per line can indicate higher likelihood of defects
+# Input samples: loc: [109.0, 9.0, 91.0], total_Op: [229.0, 0.0, 229.0]
+df['Ops_per_Line'] = df['total_Op'] / df['loc']
+
+# Explanation why the column lOCode is dropped
+df.drop(columns=['lOCode'], inplace=True)

@@ -1,0 +1,44 @@
+
+The dataframe `df` is loaded and in memory. Columns are also named attributes.
+Description of the dataset in `df` (column dtypes might be inaccurate):
+"
+Breast Cancer Wisconsin (Original) Data Set:
+- Features: Characteristics of cell nuclei in a digitized image of a breast mass
+- Target feature: Prognosis (malignant or benign)
+- Source: University of Wisconsin Hospitals, Madison
+- Citation: Include in acknowledgments and cite one or more of the provided references."
+
+Columns in `df` (true feature dtypes listed here, categoricals encoded as int):
+Clump_Thickness (float64):Sample [10.0]
+Cell_Size_Uniformity (float64):Sample [4.0]
+Cell_Shape_Uniformity (float64):Sample [6.0]
+Marginal_Adhesion (float64):Sample [1.0]
+Single_Epi_Cell_Size (float64):Sample [2.0]
+Bare_Nuclei (float64):Sample [10.0]
+Bland_Chromatin (float64):Sample [5.0]
+Normal_Nucleoli (float64):Sample [3.0]
+Mitoses (float64):Sample [1.0]
+Class (category):Sample [1.0]
+
+    
+This code, written by an expert data scientist, adds new columns to the dataset to improve downstream classification (e.g., XGBoost) predicting "Class".
+These columns incorporate real-world knowledge through feature combinations, transformations, and aggregations. Ensure all used columns exist. 
+Consider datatypes and meanings of classes. The code also performs feature selection by dropping redundant columns to avoid overfitting. The classifier will be trained and evaluated on accuracy. Added columns can be reused, dropped columns cannot.
+
+Code formatting for each added column:
+```python
+# (Feature name and description)
+# Usefulness: (Description why this adds useful real world knowledge to classify "Class" according to dataset description and attributes.)
+# Input samples: (Three samples of the columns used in the following code, e.g. 'Clump_Thickness': [10.0, 3.0, 2.0], 'Cell_Size_Uniformity': [4.0, 1.0, 1.0], ...)
+(Some pandas code using Clump_Thickness', 'Cell_Size_Uniformity', ... to add a new column for each row in df)
+```end
+
+Code formatting for dropping columns:
+```python
+# Explanation why the column XX is dropped
+df.drop(columns=['XX'], inplace=True)
+```end
+
+Each codeblock generates exactly one useful column and can drop unused columns (Feature selection).
+Each codeblock ends with ```end and starts with "```python"
+Codeblock:

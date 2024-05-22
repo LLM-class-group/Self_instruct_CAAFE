@@ -1,0 +1,5 @@
+
+# Tree height to diameter ratio
+# Usefulness: This feature is useful as it provides a measure of the tree's shape and density.
+# Input samples: 'DBH': [2.1, 2.3, 1.9], 'Ht': [3.85, 4.2, 3.1]
+df['DBH_to_Ht_ratio'] = df['DBH'] / df['Ht']

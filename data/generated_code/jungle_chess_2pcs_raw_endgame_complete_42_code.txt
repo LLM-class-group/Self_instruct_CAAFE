@@ -1,0 +1,33 @@
+
+# (White piece strength difference)
+# Usefulness: This feature adds real-world knowledge by capturing the relative strength difference between white and black pieces, which can be crucial in determining the class of the game.
+# Input samples: [white_piece0_strength - black_piece0_strength], [6.0 - 4.0, 0.0 - 4.0, 0.0 - 4.0], [6.0 - 4.0]
+df['white_black_strength_diff'] = df['white_piece0_strength'] - df['black_piece0_strength']
+
+# (File difference)
+# Usefulness: This feature adds real-world knowledge by capturing the file difference between white and black pieces, which can be crucial in determining the class of the game.
+# Input samples: [white_piece0_file - black_piece0_file], [6.0 - 6.0, 6.0 - 6.0, 6.0 - 6.0], [6.0 - 6.0]
+df['file_diff'] = df['white_piece0_file'] - df['black_piece0_file']
+
+# (Rank difference)
+# Usefulness: This feature adds real-world knowledge by capturing the rank difference between white and black pieces, which can be crucial in determining the class of the game.
+# Input samples: [white_piece0_rank - black_piece0_rank], [1.0 - 8.0, 1.0 - 8.0, 1.0 - 8.0], [1.0 - 8.0]
+df['rank_diff'] = df['white_piece0_rank'] - df['black_piece0_rank']
+
+# (White piece strength difference squared)
+# Usefulness: This feature adds real-world knowledge by capturing the squared difference in strength between white and black pieces, which can be crucial in determining the class of the game.
+# Input samples: [(white_piece0_strength - black_piece0_strength) ** 2], [(6.0 - 4.0) ** 2, (0.0 - 4.0) ** 2, (0.0 - 4.0) ** 2], [(6.0 - 4.0) ** 2]
+df['white_black_strength_diff_squared'] = (df['white_piece0_strength'] - df['black_piece0_strength']) ** 2
+
+# (White# (Sum of white piece strengths)
+# Usefulness: This feature adds real-world knowledge by capturing the total strength of white pieces, which can be crucial in determining the class of the game.
+# Input samples: white_piece0_strength + white_piece1_strength, [6.0 + 0.0, 0.0 + 0.0, 0.0 + 0.0], [6.0 + 0.0]
+df['white_piece_strength_sum'] = df['white_piece0_strength']
+
+# (Sum of black piece strengths)
+# Usefulness: This feature adds real-world knowledge by capturing the total strength of black pieces, which can be crucial in determining the class of the game.
+# Input samples: black_piece0_strength + black_piece1_strength, [4.0 + 0.0, 4.0 + 0.0, 4.0 + 0.0], [4.0 + 0.0]
+df['black_piece_strength_sum'] = df['black_piece0_strength']
+
+# Drop unused columns
+df.drop(columns=['white_piece0_strength', 'black_piece0_strength'], inplace=True)

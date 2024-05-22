@@ -1,0 +1,25 @@
+
+# Credit history ratio
+# Usefulness: Combines credit history and credit amount to provide a better understanding of credit risk
+# Input samples: 'credit_history': [4, 4, 3], 'credit_amount': [6742.0, 2083.0, 2039.0]
+df['credit_history_ratio'] = df['credit_history'].astype('float64') / df['credit_amount']
+
+df.drop(columns=['credit_history'], inplace=True)
+
+# Installment commitment percentage
+# Usefulness: Provides a better understanding of the customer's ability to manage their debt
+# Input samples: 'installment_commitment': [2.0, 1.0, 1.0], 'credit_amount': [6742.0, 2083.0, 2039.0]
+df['installment_commitment_percentage'] = (df['installment_commitment'] / df['credit_amount']) * 100
+
+df.drop(columns=['installment_commitment'], inplace=True)
+# Credit amount per existing credit
+# Usefulness: Helps to identify customers with excessive credit usage
+# Input samples: 'credit_amount': [6742.0, 2083.0, 2039.0], 'existing_credits': [2.0, 1.0, 2.0]
+df['credit_amount_per_existing_credit'] = df['credit_amount'] / df['existing_credits']
+
+df.drop(columns=['existing_credits'], inplace=True)# Age in years
+# Usefulness: Provides a better understanding of the customer's age and creditworthiness
+# Input samples: 'age': [36.0, 36.0, 36.0]
+df['age_in_years'] = df['age']
+
+df.drop(columns=['age'], inplace=True)

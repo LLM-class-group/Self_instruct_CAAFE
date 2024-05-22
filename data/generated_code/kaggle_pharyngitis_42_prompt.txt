@@ -1,0 +1,51 @@
+
+The dataframe `df` is loaded and in memory. Columns are also named attributes.
+Description of the dataset in `df` (column dtypes might be inaccurate):
+"
+Dataset Description:
+Predicting RADT (Rapid Antigen Detection Test) positivity in pediatric patients with pharyngitis based on signs and symptoms."
+
+Columns in `df` (true feature dtypes listed here, categoricals encoded as int):
+number (float64):Sample [3052.0]
+age_y (float64):Sample [6.6]
+pain (float64):Sample [1.0]
+swollenadp (float64):Sample [0.0]
+tender (float64):Sample [0.0]
+tonsillarswelling (float64):Sample [0.0]
+exudate (float64):Sample [0.0]
+temperature (float64):Sample [39.0]
+sudden (float64):Sample [0.0]
+cough (float64):Sample [1.0]
+rhinorrhea (float64):Sample [1.0]
+conjunctivitis (float64):Sample [0.0]
+headache (float64):Sample [0.0]
+erythema (float64):Sample [1.0]
+petechiae (float64):Sample [0.0]
+abdopain (float64):Sample [0.0]
+diarrhea (float64):Sample [0.0]
+nauseavomit (float64):Sample [0.0]
+scarlet (float64):Sample [0.0]
+radt (category):Sample [1.0]
+
+    
+This code, written by an expert data scientist, adds new columns to the dataset to improve downstream classification (e.g., XGBoost) predicting "radt".
+These columns incorporate real-world knowledge through feature combinations, transformations, and aggregations. Ensure all used columns exist. 
+Consider datatypes and meanings of classes. The code also performs feature selection by dropping redundant columns to avoid overfitting. The classifier will be trained and evaluated on accuracy. Added columns can be reused, dropped columns cannot.
+
+Code formatting for each added column:
+```python
+# (Feature name and description)
+# Usefulness: (Description why this adds useful real world knowledge to classify "radt" according to dataset description and attributes.)
+# Input samples: (Three samples of the columns used in the following code, e.g. 'number': [3052.0, 2486.0, 2385.0], 'age_y': [6.6, 5.7, 3.0], ...)
+(Some pandas code using number', 'age_y', ... to add a new column for each row in df)
+```end
+
+Code formatting for dropping columns:
+```python
+# Explanation why the column XX is dropped
+df.drop(columns=['XX'], inplace=True)
+```end
+
+Each codeblock generates exactly one useful column and can drop unused columns (Feature selection).
+Each codeblock ends with ```end and starts with "```python"
+Codeblock:

@@ -76,8 +76,8 @@ def load_result(all_results, ds, seed, method):
             return None
 
 
-def evaluate_dataset_with_and_without_cafe(
-    ds, seed, methods, metric_used, max_time=300, overwrite=False
+def evaluate_dataset_with_or_without_caafe(
+    ds, seed, methods, metric_used, using_caafe, max_time=300, overwrite=False
 ):  
     """Evaluates a dataframe with and without feature extension."""
     ds, df_train, df_test, df_train_old, df_test_old = get_data_split(ds, seed)
@@ -101,22 +101,28 @@ def evaluate_dataset_with_and_without_cafe(
         #     print(f"Skipping {path}")
         #     continue
         # print(ds[0], method_str, seed)
-        r = evaluate_dataset(
-            df_train=df_train_old,
-            df_test=df_test_old,
-            name=ds[0],
-            method=method,
-            metric_used=metric_used,
-            max_time=max_time,
-            seed=seed,
-            target_name=ds[4][-1],
-        )
-        # f = open(
-        #     path,
-        #     "wb",
-        # )
-        # pickle.dump(r, f)
-        # f.close()
+        if using_caafe:
+            r = evaluate_dataset(
+                df_train=df_train,
+                df_test=df_test,
+                name=ds[0],
+                method=method,
+                metric_used=metric_used,
+                max_time=max_time,
+                seed=seed,
+                target_name=ds[4][-1],
+            )
+        else:
+             r = evaluate_dataset(
+                df_train=df_train_old,
+                df_test=df_test_old,
+                name=ds[0],
+                method=method,
+                metric_used=metric_used,
+                max_time=max_time,
+                seed=seed,
+                target_name=ds[4][-1],
+            )
         acc_results.append(r["acc"])
         roc_auc_results.append(r["roc"])
     return acc_results, roc_auc_results

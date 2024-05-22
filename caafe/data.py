@@ -238,9 +238,10 @@ def get_data_split(ds, seed):  # split the data into train and test
 
 def load_kaggle():
     cc_test_datasets_multiclass = []
+    data_dir = "/home/jiahe/ML/Self_instruct_CAAFE/data"
     for name in kaggle_dataset_ids:
         try:
-            df_all = pd.read_csv(f"datasets_kaggle/{name[0]}/{name[1]}.csv")
+            df_all = pd.read_csv(f"{data_dir}/datasets_kaggle/{name[1]}.csv")
             df_train, df_test = train_test_split(
                 df_all, test_size=0.25, random_state=0)
             ds = [
@@ -253,7 +254,6 @@ def load_kaggle():
                 + [name[2]],
                 "",
             ]
-            data_dir = os.environ.get("DATA_DIR", "data/")
             path = f"{data_dir}/dataset_descriptions/kaggle_{name[0]}.txt"
             try:
                 with open(path) as f:
@@ -264,12 +264,12 @@ def load_kaggle():
             cc_test_datasets_multiclass += [ds]
         except:
             print(
-                f"{name[0]} at datasets_kaggle/{name[0]}/{name[1]}.csv not found, skipping..."
+                f"{name[0]} at datasets_kaggle/{name[1]}.csv not found, skipping..."
             )
 
     for name in kaggle_competition_ids:
         try:
-            df_all = pd.read_csv(f"datasets_kaggle/{name}/train.csv")
+            df_all = pd.read_csv(f"{data_dir}/datasets_kaggle/{name}/train.csv")
             df_train, df_test = train_test_split(
                 df_all, test_size=0.25, random_state=0)
             ds = [
@@ -280,7 +280,7 @@ def load_kaggle():
                 df_train.columns.tolist(),
                 "",
             ]
-            path = f"dataset_descriptions/kaggle_{name}.txt"
+            path = f"{data_dir}/dataset_descriptions/kaggle_{name}.txt"
             try:
                 with open(path) as f:
                     ds[-1] = f.read()
@@ -306,7 +306,7 @@ def load_all_data():
         return_capped=True,
     )
 
-    # cc_test_datasets_multiclass += load_kaggle()
+    # cc_test_datasets_multiclass = load_kaggle()
 
     return postprocess_datasets(cc_test_datasets_multiclass)
 
@@ -357,23 +357,35 @@ kaggle_dataset_ids = [  # Format: (Dataset ID, Dataset Name, Target Column, User
     ("pharyngitis", "pharyngitis", "radt", "yoshifumimiya"),
 ]
 
-multi_class_benchmark_ids = [3, 6, 14, 15, 16,
-                             22, 28, 31, 32, 38,
-                             44, 56, 174, 182, 185,
-                             307, 312, 328, 377, 474,
-                             740, 764, 802, 811, 814,
-                             824, 838, 846, 855, 884,
-                             896, 910, 913, 914, 919,
-                             924, 926, 936, 943, 958,
-                             983, 1005, 1016, 1049, 
-                             1065, 1067, 1068, 1100, 1116,
-                             1120, 1220, 1446, 1461, 1468,
-                             1471, 1472, 1479, 1482, 1485,
-                             1487, 1491, 1492, 1493, 1494,
-                             1498, 1501, 1504, 1547, 1552,
-                             1554, 4135, 4329, 4534, 6332,
-                             23381, 40702, 40710, 40971, 40984,
-                             44484, 45102, 45711, 45712, 45717]
+old_benchmark_ids = [
+    11,
+    15,
+    23,
+    31,
+    37,
+    50,
+    188,
+    1068,
+    1169,
+    41027,
+]
 
-benchmark_ids = multi_class_benchmark_ids
-# 1050
+our_benchmark_ids = [3, 6, 14, 15, 16,
+                     22, 28, 31, 32, 38,
+                     44, 56, 174, 182, 185,
+                     307, 312, 328, 377, 474,
+                     740, 764, 802, 811, 814,
+                     824, 838, 846, 855, 884,
+                     896, 910, 913, 914, 919,
+                     924, 926, 936, 943, 958,
+                     983, 1005, 1016, 1049,
+                     1065, 1067, 1068, 1100, 1116,
+                     1120, 1220, 1446, 1461, 1468,
+                     1471, 1472, 1479, 1482, 1485,
+                     1487, 1491, 1492, 1493, 1494,
+                     1498, 1501, 1504, 1547, 1552,
+                     1554, 4135, 4329, 4534, 6332,
+                     23381, 40702, 40710, 40971, 40984,
+                     44484, 45102, 45711, 45712, 45717]
+
+benchmark_ids = old_benchmark_ids

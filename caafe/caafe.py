@@ -133,8 +133,8 @@ def generate_features(
         temperature=0.5,
         max_tokens=500,
     )
-    simplified_description =simplified_description.replace("```begin","").replace(
-            "```", "").replace("<end>", "")
+    simplified_description = simplified_description.replace("```begin", "").replace(
+        "```", "").replace("<end>", "")
     ds[-1] = simplified_description
     prompt = build_prompt_from_df(ds, df, iterative=iterative)
 
@@ -333,9 +333,9 @@ Next codeblock:
         # log good results
         # ------------------------------
         #
-        log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/test_prompt.jsonl"
+        log_path = "/home/jiahe/ML/Self_instruct_CAAFE/caafe/log/good2.jsonl"
 
-        if improvement_roc + improvement_acc > 0:
+        if improvement_roc > 0.001 and improvement_acc > 0.001:
             print_important(f"!! Log one good response from LLM !!")
             success = success + 1
             log_messages = [

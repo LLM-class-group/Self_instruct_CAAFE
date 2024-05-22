@@ -1,0 +1,7 @@
+
+# Center of Mass
+# Usefulness: The center of mass of the letter can be a useful feature for classification. The position of the center of mass can give information about the shape and size of the letter.
+# Input samples: [x-bar, y-bar]
+df['center_of_mass_x'] = df['x-bar'] + (df['x2bar'] - df['x-bar']) / 2
+df['center_of_mass_y'] = df['y-bar'] + (df['y2bar'] - df['y-bar']) / 2
+df.drop(columns=['x2bar', 'y2bar'], inplace=True)

@@ -3,6 +3,8 @@ import os
 from run_llm_code import run_llm_code
 from typing import Tuple
 
+dirname = "generated_code_sft"
+
 
 def extend_using_dfs(df_train: pd.DataFrame, df_test: pd.DataFrame, target_train: pd.Series) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
@@ -34,7 +36,7 @@ def extend_using_dfs(df_train: pd.DataFrame, df_test: pd.DataFrame, target_train
 
     df_train, df_test = (
         feature_matrix.iloc[: len(df_train), :].reset_index(drop=True),
-        feature_matrix.iloc[len(df_train) :, :].reset_index(drop=True),
+        feature_matrix.iloc[len(df_train):, :].reset_index(drop=True),
     )
 
     return df_train, df_test
@@ -58,7 +60,8 @@ def extend_using_autofeat(df_train, df_test, target_train):
     # Use a label encoder for all string columns in df_train, then apply to df_test
     from sklearn.preprocessing import OrdinalEncoder
 
-    encoder = OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)
+    encoder = OrdinalEncoder(
+        handle_unknown="use_encoded_value", unknown_value=-1)
 
     for col in df_train.columns:
         if df_train[col].dtype == "object" or df_train[col].dtype.name == "category":
@@ -86,9 +89,9 @@ def transform_data_with_code(df_train, df_test, ds, seed, code_overwrite=None):
     if code_overwrite:
         code = code_overwrite
     else:
-        #todo replace getting code from file to generate_feature
-        data_dir = os.environ.get("DATA_DIR", "data/")
-        f = open(f"{data_dir}/generated_code/{ds[0]}_{seed}_code.txt", "r")
+        # todo replace getting code from file to generate_feature
+        data_dir = os.environ.get("DATA_DIR", "data")
+        f = open(f"{data_dir}/{dirname}/{ds[0]}_{seed}_code.txt", "r")
         code = f.read()
         f.close()
 
@@ -98,7 +101,8 @@ def transform_data_with_code(df_train, df_test, ds, seed, code_overwrite=None):
         convert_categorical_to_integer=not ds[0].startswith("kaggle"),
     )
     df_test = run_llm_code(
-        code, df_test, convert_categorical_to_integer=not ds[0].startswith("kaggle")
+        code, df_test, convert_categorical_to_integer=not ds[0].startswith(
+            "kaggle")
     )
 
     return df_train, df_test

@@ -1,0 +1,17 @@
+
+# Wife's education level vs. age interaction
+# Usefulness: This feature captures the relationship between wife's education and age, which may affect her likelihood of using a specific contraceptive method.
+# Input samples: 'Wifes_age': [21.0, 40.0, 35.0], 'Wifes_education': [1, 2, 1]
+df['Wife_Education_Age_Interact'] = df['Wifes_age'] * df['Wifes_education']
+# Number of children ever born vs. wife's age interaction
+# Usefulness: This feature captures the relationship between the number of children ever born and wife's age, which may affect their likelihood of using a specific contraceptive method.
+# Input samples: 'Wifes_age': [21.0, 40.0, 35.0], 'Number_of_children_ever_born': [3.0, 2.0, 1.0]
+df['Children_Age_Interact'] = df['Wifes_age'] * df['Number_of_children_ever_born']# Husband's occupation vs. standard-of-living index interaction
+# Usefulness: This feature captures the relationship between husband's occupation and standard-of-living index, which may affect their joint decision on a specific contraceptive method.
+# Input samples: 'Husbands_occupation': [2, 1, 0], 'Standard-of-living_index': [0, 1, 2]
+df['Husband_Occupation_SoL_Index_Interact'] = df['Husbands_occupation'] * df['Standard-of-living_index']# Feature selection: Drop 'Wife_now_working?' column
+# Reason: This column is binary and does not provide significant information about the relationship between the features and the target variable.
+df.drop(columns=['Wifes_now_working%3F'], inplace=True)# Wife's education level vs. media exposure interaction
+# Usefulness: This feature captures the relationship between wife's education level and media exposure, which may affect her likelihood of using a specific contraceptive method.
+# Input samples: 'Media_exposure': [1, 0, 1], 'Wifes_education': [1, 2, 1]
+df['Wife_Education_Media_Interact'] = df['Media_exposure'] * df['Wifes_education']

@@ -1,0 +1,47 @@
+
+The dataframe `df` is loaded and in memory. Columns are also named attributes.
+Description of the dataset in `df` (column dtypes might be inaccurate):
+"
+The dataset is a letter image recognition dataset containing 20,000 unique stimuli of 26 capital English letters, each belonging to 20 different fonts. Each stimulus is represented by 16 numerical attributes scaled to integer values from 0 to 15."
+
+Columns in `df` (true feature dtypes listed here, categoricals encoded as int):
+x-box (float64):Sample [4.0]
+y-box (float64):Sample [8.0]
+width (float64):Sample [5.0]
+high (float64):Sample [6.0]
+onpix (float64):Sample [4.0]
+x-bar (float64):Sample [7.0]
+y-bar (float64):Sample [7.0]
+x2bar (float64):Sample [7.0]
+y2bar (float64):Sample [7.0]
+xybar (float64):Sample [7.0]
+x2ybr (float64):Sample [6.0]
+xy2br (float64):Sample [4.0]
+x-ege (float64):Sample [3.0]
+xegvy (float64):Sample [8.0]
+y-ege (float64):Sample [3.0]
+yegvx (float64):Sample [7.0]
+class (category):Sample [3.0]
+
+    
+This code, written by an expert data scientist, adds new columns to the dataset to improve downstream classification (e.g., XGBoost) predicting "class".
+These columns incorporate real-world knowledge through feature combinations, transformations, and aggregations. Ensure all used columns exist. 
+Consider datatypes and meanings of classes. The code also performs feature selection by dropping redundant columns to avoid overfitting. The classifier will be trained and evaluated on accuracy. Added columns can be reused, dropped columns cannot.
+
+Code formatting for each added column:
+```python
+# (Feature name and description)
+# Usefulness: (Description why this adds useful real world knowledge to classify "class" according to dataset description and attributes.)
+# Input samples: (Three samples of the columns used in the following code, e.g. 'x-box': [4.0, 4.0, 1.0], 'y-box': [8.0, 9.0, 0.0], ...)
+(Some pandas code using x-box', 'y-box', ... to add a new column for each row in df)
+```end
+
+Code formatting for dropping columns:
+```python
+# Explanation why the column XX is dropped
+df.drop(columns=['XX'], inplace=True)
+```end
+
+Each codeblock generates exactly one useful column and can drop unused columns (Feature selection).
+Each codeblock ends with ```end and starts with "```python"
+Codeblock:

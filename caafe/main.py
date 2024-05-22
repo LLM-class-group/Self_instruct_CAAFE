@@ -75,7 +75,7 @@ def str_to_bool(s):
 
 # 读取命令行参数
 run_all = str_to_bool(sys.argv[1])
-iteration_time = 5
+iteration_time = 30
 id = int(sys.argv[3])
 
 print_important(

@@ -1,0 +1,58 @@
+
+The dataframe `df` is loaded and in memory. Columns are also named attributes.
+Description of the dataset in `df` (column dtypes might be inaccurate):
+"
+The Eucalyptus Soil Conservation dataset aims to identify the best seedlots for soil conservation in seasonally dry hill country. It contains 20 attributes, including site information, tree characteristics, and a class label for utility rating.
+
+Critical features:
+1. DBH - best diameter base height (cm)
+2. Ht - height (m)
+3. Surv - survival
+4. Utility - utility rating
+
+Note: The dataset has missing values and inconsistent recording procedures across trials, which may affect the analysis."
+
+Columns in `df` (true feature dtypes listed here, categoricals encoded as int):
+Abbrev (int32):Sample [6]
+Rep (float64):Sample [2.0]
+Locality (int32):Sample [4]
+Map_Ref (int32):Sample [6]
+Latitude (int32):Sample [4]
+Altitude (float64):Sample [180.0]
+Rainfall (float64):Sample [1080.0]
+Frosts (float64):Sample [-3.0]
+Year (float64):Sample [1982.0]
+Sp (int32):Sample [19]
+PMCno (float64):Sample [1340.0]
+DBH (float64):Sample [2.1]
+Ht (float64):Sample [3.85]
+Surv (float64):Sample [25.0]
+Vig (float64):Sample [1.0]
+Ins_res (float64):Sample [2.0]
+Stem_Fm (float64):Sample [3.0]
+Crown_Fm (float64):Sample [3.0]
+Brnch_Fm (float64):Sample [3.0]
+Utility (category):Sample [0.0]
+
+    
+This code, written by an expert data scientist, adds new columns to the dataset to improve downstream classification (e.g., XGBoost) predicting "Utility".
+These columns incorporate real-world knowledge through feature combinations, transformations, and aggregations. Ensure all used columns exist. 
+Consider datatypes and meanings of classes. The code also performs feature selection by dropping redundant columns to avoid overfitting. The classifier will be trained and evaluated on accuracy. Added columns can be reused, dropped columns cannot.
+
+Code formatting for each added column:
+```python
+# (Feature name and description)
+# Usefulness: (Description why this adds useful real world knowledge to classify "Utility" according to dataset description and attributes.)
+# Input samples: (Three samples of the columns used in the following code, e.g. 'Abbrev': [6, 11, 5], 'Rep': [2.0, 1.0, 1.0], ...)
+(Some pandas code using Abbrev', 'Rep', ... to add a new column for each row in df)
+```end
+
+Code formatting for dropping columns:
+```python
+# Explanation why the column XX is dropped
+df.drop(columns=['XX'], inplace=True)
+```end
+
+Each codeblock generates exactly one useful column and can drop unused columns (Feature selection).
+Each codeblock ends with ```end and starts with "```python"
+Codeblock:

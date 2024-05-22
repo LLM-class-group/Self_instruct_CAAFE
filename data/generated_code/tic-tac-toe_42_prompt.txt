@@ -1,0 +1,40 @@
+
+The dataframe `df` is loaded and in memory. Columns are also named attributes.
+Description of the dataset in `df` (column dtypes might be inaccurate):
+"
+The dataset contains 255,168 instances, representing the endgame configurations of Tic-Tac-Toe games where 'x' plays first. Each instance is described by 9 binary features (1-9) representing the state of the 9 squares on the board, with values {x, o, b} indicating whether the square is occupied by 'x', 'o', or is blank, respectively. The target variable is a binary class {positive, negative} indicating whether 'x' has won the game or not."
+
+Columns in `df` (true feature dtypes listed here, categoricals encoded as int):
+top-left-square (int32):Sample [1]
+top-middle-square (int32):Sample [0]
+top-right-square (int32):Sample [2]
+middle-left-square (int32):Sample [2]
+middle-middle-square (int32):Sample [2]
+middle-right-square (int32):Sample [1]
+bottom-left-square (int32):Sample [2]
+bottom-middle-square (int32):Sample [1]
+bottom-right-square (int32):Sample [0]
+Class (category):Sample [1.0]
+
+    
+This code, written by an expert data scientist, adds new columns to the dataset to improve downstream classification (e.g., XGBoost) predicting "Class".
+These columns incorporate real-world knowledge through feature combinations, transformations, and aggregations. Ensure all used columns exist. 
+Consider datatypes and meanings of classes. The code also performs feature selection by dropping redundant columns to avoid overfitting. The classifier will be trained and evaluated on accuracy. Added columns can be reused, dropped columns cannot.
+
+Code formatting for each added column:
+```python
+# (Feature name and description)
+# Usefulness: (Description why this adds useful real world knowledge to classify "Class" according to dataset description and attributes.)
+# Input samples: (Three samples of the columns used in the following code, e.g. 'top-left-square': [1, 2, 0], 'top-middle-square': [0, 1, 1], ...)
+(Some pandas code using top-left-square', 'top-middle-square', ... to add a new column for each row in df)
+```end
+
+Code formatting for dropping columns:
+```python
+# Explanation why the column XX is dropped
+df.drop(columns=['XX'], inplace=True)
+```end
+
+Each codeblock generates exactly one useful column and can drop unused columns (Feature selection).
+Each codeblock ends with ```end and starts with "```python"
+Codeblock:
