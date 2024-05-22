@@ -3,7 +3,7 @@ import os
 from run_llm_code import run_llm_code
 from typing import Tuple
 
-dirname = "generated_code_sft"
+dirname = "generated_code_sft2"
 
 
 def extend_using_dfs(df_train: pd.DataFrame, df_test: pd.DataFrame, target_train: pd.Series) -> Tuple[pd.DataFrame, pd.DataFrame]:

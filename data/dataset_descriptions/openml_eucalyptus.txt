@@ -1,0 +1,9 @@
+The Eucalyptus Soil Conservation dataset aims to identify the best seedlots for soil conservation in seasonally dry hill country. It contains 20 attributes, including site information, tree characteristics, and a class label for utility rating.
+
+Critical features:
+1. DBH - best diameter base height (cm)
+2. Ht - height (m)
+3. Surv - survival
+4. Utility - utility rating
+
+Note: The dataset has missing values and inconsistent recording procedures across trials, which may affect the analysis.

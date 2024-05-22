@@ -1,1 +1,5 @@
-**Breast Cancer Wisconsin (Original) Data Set.** Features are computed from a digitized image of a fine needle aspirate (FNA) of a breast mass. They describe characteristics of the cell nuclei present in the image. The target feature records the prognosis (malignant or benign).
+Breast Cancer Wisconsin (Original) Data Set:
+- Features: Characteristics of cell nuclei in a digitized image of a breast mass
+- Target feature: Prognosis (malignant or benign)
+- Source: University of Wisconsin Hospitals, Madison
+- Citation: Include in acknowledgments and cite one or more of the provided references.

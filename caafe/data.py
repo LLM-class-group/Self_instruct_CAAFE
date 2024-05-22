@@ -75,6 +75,7 @@ def load_openml_list(
     max_num_classes=10,
     shuffled=True,
     return_capped=False,
+    simplify_description=True
 ):
     i = 0
     """Load a list of openml datasets and return the data in the correct format."""
@@ -141,6 +142,15 @@ def load_openml_list(
                 continue
         i += 1
         print(i)
+
+        if simplify_description:
+            path = f"/home/jiahe/ML/Self_instruct_CAAFE/data/dataset_descriptions/openml_{entry["name"]}.txt"
+            try:
+                with open(path) as f:
+                    description = f.read()
+            except:
+                print("Using initial description")
+
         datasets += [
             [
                 entry["name"],

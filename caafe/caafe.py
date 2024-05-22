@@ -98,6 +98,7 @@ def generate_features(
     display_method="markdown",
     n_splits=10,
     n_repeats=2,
+    rewrite_prompt = False
 ):
     def format_for_display(code):
         code = code.replace("```python", "").replace(
@@ -115,27 +116,30 @@ def generate_features(
     assert (
         iterative == 1 or metric_used is not None
     ), "metric_used must be set if iterative"
-    data_description = ds[-1]
-    simlify_messages = [
-        {
+    
+    if rewrite_prompt :
+        data_description = ds[-1]
+        simlify_messages = [
+            {
             "role": "system",
             "content": "You are a helpful assistant . You will simplify the data description,only preserve those which is critical for feature engineering. ",
-        },
-        {
+            },
+            {
             "role": "user",
             "content": "You are a helpful assistant . You will simplify the data description,only preserve those which is critical for feature engineering. You should only response the simplified description .Your answer should begin with \"```begin\" .Dataset description:\n"+data_description,
-        },
-    ]
+            },
+        ]
 
-    _, simplified_description = chat_complete(
-        messages=simlify_messages,
-        stop=["```end"],
-        temperature=0.5,
-        max_tokens=500,
-    )
-    simplified_description = simplified_description.replace("```begin", "").replace(
-        "```", "").replace("<end>", "")
-    ds[-1] = simplified_description
+        _, simplified_description = chat_complete(
+            messages=simlify_messages,
+            stop=["```end"],
+            temperature=0.5,
+            max_tokens=500,
+        )
+        simplified_description = simplified_description.replace("```begin", "").replace(
+            "```", "").replace("<end>", "")
+        ds[-1] = simplified_description
+        
     prompt = build_prompt_from_df(ds, df, iterative=iterative)
 
     if just_print_prompt:

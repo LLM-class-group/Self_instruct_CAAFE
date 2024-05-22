@@ -1,0 +1,7 @@
+**PC1 Software defect prediction dataset**
+
+* 23 features:
+	+ 20 Halstead and McCabe metrics (numeric)
+	+ 2 flow graph metrics (numeric)
+	+ 1 binary feature (defects: true/false)
+* Predicts software defects in flight software for earth orbiting satellite

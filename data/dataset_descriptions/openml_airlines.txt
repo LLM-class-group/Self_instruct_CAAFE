@@ -1,0 +1,4 @@
+The dataset contains information about flights, including:
+- Scheduled departure time
+- Features relevant to predicting flight delay
+- Target variable: whether the flight was delayed or not

@@ -1,2 +1,1 @@
-**Tic-Tac-Toe Endgame database**  
-This database encodes the complete set of possible board configurations at the end of tic-tac-toe games, where "x" is assumed to have played first.  The target concept is "win for x" (i.e., true when "x" has one of 8 possible ways to create a "three-in-a-row").  
+The dataset contains 255,168 instances, representing the endgame configurations of Tic-Tac-Toe games where 'x' plays first. Each instance is described by 9 binary features (1-9) representing the state of the 9 squares on the board, with values {x, o, b} indicating whether the square is occupied by 'x', 'o', or is blank, respectively. The target variable is a binary class {positive, negative} indicating whether 'x' has won the game or not.

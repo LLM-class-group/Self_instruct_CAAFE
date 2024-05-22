@@ -1,0 +1,21 @@
+The German Credit dataset contains 20 features that describe customers and classify them as good or bad credit risks. The dataset has a cost matrix, where misclassifying a good customer as bad has a cost of 5, and misclassifying a bad customer as good has a cost of 1. The features include:
+1. Status of existing checking account
+2. Duration in months
+3. Credit history
+4. Purpose of credit
+5. Credit amount
+6. Status of savings account/bonds
+7. Present employment
+8. Installment rate
+9. Personal status and sex
+10. Other debtors/guarantors
+11. Present residence
+12. Property
+13. Age
+14. Other installment plans
+15. Housing
+16. Number of existing credits
+17. Job
+18. People being liable to provide maintenance
+19. Telephone
+20. Foreign worker

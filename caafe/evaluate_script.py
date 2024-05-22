@@ -19,8 +19,8 @@ from caafe import generate_features
 from evaluate import evaluate_dataset_with_or_without_caafe
 
 sft = True
-generate = False
-dirname = "generated_code_sft" if sft else "generated_code"
+generate = True
+dirname = "generated_code_sft2" if sft else "generated_code"
 
 
 def generate_and_save_feats(i, seed=0, iterative_method=None, iterations=10):
@@ -42,7 +42,7 @@ def generate_and_save_feats(i, seed=0, iterative_method=None, iterations=10):
         display_method="print",
     )
 
-    data_dir = os.environ.get("DATA_DIR", "data/")
+    data_dir = os.environ.get("DATA_DIR", "data")
     f = open(
         f"{data_dir}/{dirname}/{ds[0]}_{seed}_prompt.txt",
         "w",

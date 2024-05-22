@@ -1,0 +1,42 @@
+
+The dataframe `df` is loaded and in memory. Columns are also named attributes.
+Description of the dataset in `df` (column dtypes might be inaccurate):
+"
+The dataset contains information about flights, including:
+- Scheduled departure time
+- Features relevant to predicting flight delay
+- Target variable: whether the flight was delayed or not
+"
+
+Columns in `df` (true feature dtypes listed here, categoricals encoded as int):
+Airline (int32):Sample [3]
+Flight (float64):Sample [1045.0]
+AirportFrom (float64):Sample [64.0]
+AirportTo (float64):Sample [3.0]
+DayOfWeek (int32):Sample [0]
+Time (float64):Sample [360.0]
+Length (float64):Sample [195.0]
+Delay (category):Sample [1.0]
+
+    
+This code, written by an expert data scientist, adds new columns to the dataset to improve downstream classification (e.g., XGBoost) predicting "Delay".
+These columns incorporate real-world knowledge through feature combinations, transformations, and aggregations. Ensure all used columns exist. 
+Consider datatypes and meanings of classes. The code also performs feature selection by dropping redundant columns to avoid overfitting. The classifier will be trained and evaluated on accuracy. Added columns can be reused, dropped columns cannot.
+
+Code formatting for each added column:
+```python
+# (Feature name and description)
+# Usefulness: (Description why this adds useful real world knowledge to classify "Delay" according to dataset description and attributes.)
+# Input samples: (Three samples of the columns used in the following code, e.g. 'Airline': [3, 2, 15], 'Flight': [1045.0, 552.0, 923.0], ...)
+(Some pandas code using Airline', 'Flight', ... to add a new column for each row in df)
+```end
+
+Code formatting for dropping columns:
+```python
+# Explanation why the column XX is dropped
+df.drop(columns=['XX'], inplace=True)
+```end
+
+Each codeblock generates exactly one useful column and can drop unused columns (Feature selection).
+Each codeblock ends with ```end and starts with "```python"
+Codeblock:
