@@ -1,12 +1,4 @@
-Reference:
-
-- NoFeat.Eng.：0.8274
-- CAAFE(GPT-3.5)：0.8283
-- CAAFE(GPT-4)：0.8588
-
----------------------------------------------------------------------------------------
-
-Evaluation result of non feature engineering:
+Evaluation result of no feature engineering:
 
 Method: TabPFN, Average: AUC = 0.8116627387827222, Accuracy = 0.7536615401506424
 Dataset 0: AUC = 1.0, Accuracy = 0.9599999785423279
@@ -46,7 +38,7 @@ Dataset 9: AUC = 0.8496710870474994, Accuracy = 0.7360000014305115
 
 ---------------------------------------------------------------------------------------
 
-Evaluation result of CAAFE: (iter = 10)
+Evaluation result of CAAFE: (iter = 10, seed = 42)
 
 Method: TabPFN, Average: AUC = 0.8277591113596741, Accuracy = 0.7621538460254669
 Dataset 0: AUC = 1.0, Accuracy = 0.9599999785423279
@@ -84,9 +76,49 @@ Dataset 7: AUC = 0.7346743295019157, Accuracy = 0.9120000004768372
 Dataset 8: AUC = 0.6605723370429253, Accuracy = 0.6240000128746033
 Dataset 9: AUC = 0.8842527202343587, Accuracy = 0.7839999794960022
 
+---------------------------------------------------------------------------------------
+
+Evaluation result of CAAFE: (iter = 10, seed = 24)
+
+Method: TabPFN, Average: AUC = 0.818700877977436, Accuracy = 0.7673230767250061
+Dataset 0 (balance-scale): AUC = 0.9953703703703703, Accuracy = 0.8799999952316284
+Dataset 1 (breast-w): AUC = 1.0, Accuracy = 1.0
+Dataset 2 (cmc): AUC = 0.7270112392783199, Accuracy = 0.5519999861717224
+Dataset 3 (credit-g): AUC = 0.7303591470258137, Accuracy = 0.6880000233650208
+Dataset 4 (diabetes): AUC = 0.8352240499149177, Accuracy = 0.7839999794960022
+Dataset 5 (tic-tac-toe): AUC = 0.7166666666666667, Accuracy = 0.7692307829856873
+Dataset 6 (eucalyptus): AUC = 0.8876201617010441, Accuracy = 0.6159999966621399
+Dataset 7 (pc1): AUC = 0.7513043478260869, Accuracy = 0.9200000166893005
+Dataset 8 (airlines): AUC = 0.6271230056613485, Accuracy = 0.6399999856948853
+Dataset 9 (jungle_chess_2pcs_raw_endgame_complete): AUC = 0.9163297913297913, Accuracy = 0.8240000009536743
+
+Method: random_forest, Average: AUC = 0.8052009224613068, Accuracy = 0.7593230724334716
+Dataset 0 (balance-scale): AUC = 0.8396990740740741, Accuracy = 0.8399999737739563
+Dataset 1 (breast-w): AUC = 1.0, Accuracy = 1.0
+Dataset 2 (cmc): AUC = 0.6719510992802918, Accuracy = 0.4959999918937683
+Dataset 3 (credit-g): AUC = 0.7312008978675646, Accuracy = 0.7200000286102295
+Dataset 4 (diabetes): AUC = 0.8343732274532047, Accuracy = 0.7839999794960022
+Dataset 5 (tic-tac-toe): AUC = 0.65, Accuracy = 0.7692307829856873
+Dataset 6 (eucalyptus): AUC = 0.870534934116249, Accuracy = 0.6159999966621399
+Dataset 7 (pc1): AUC = 0.8447826086956522, Accuracy = 0.9279999732971191
+Dataset 8 (airlines): AUC = 0.6954451878538344, Accuracy = 0.656000018119812
+Dataset 9 (jungle_chess_2pcs_raw_endgame_complete): AUC = 0.9140221952721953, Accuracy = 0.7839999794960022
+
+Method: xgb, Average: AUC = 0.8026539734465391, Accuracy = 0.7388307631015778
+Dataset 0 (balance-scale): AUC = 0.9039351851851851, Accuracy = 0.8399999737739563
+Dataset 1 (breast-w): AUC = 1.0, Accuracy = 0.9230769276618958
+Dataset 2 (cmc): AUC = 0.6932490387459332, Accuracy = 0.46399998664855957
+Dataset 3 (credit-g): AUC = 0.712121212121212, Accuracy = 0.6639999747276306
+Dataset 4 (diabetes): AUC = 0.8150879183210437, Accuracy = 0.7760000228881836
+Dataset 5 (tic-tac-toe): AUC = 0.7166666666666666, Accuracy = 0.7692307829856873
+Dataset 6 (eucalyptus): AUC = 0.8736048775570835, Accuracy = 0.6240000128746033
+Dataset 7 (pc1): AUC = 0.7713043478260869, Accuracy = 0.9359999895095825
+Dataset 8 (airlines): AUC = 0.6309830159547092, Accuracy = 0.6079999804496765
+Dataset 9 (jungle_chess_2pcs_raw_endgame_complete): AUC = 0.909587472087472, Accuracy = 0.7839999794960022
+
 ------------------------------------------------------------------------
 
-Evaluation result of CAAFE: (iter = 3)
+Evaluation result of CAAFE: (iter = 3, seed = 42)
 
 Method: TabPFN, Average: AUC = 0.8130309608365318, Accuracy = 0.750461533665657
 Dataset 0: AUC = 1.0, Accuracy = 0.9599999785423279
@@ -126,3 +158,40 @@ Dataset 9: AUC = 0.8970038187905421, Accuracy = 0.7839999794960022
 
 ---------------------------------------------------------------------------------------
 
+Evaluation result of CAAFE: (iter = 3, seed = 24)
+
+Method: TabPFN, Average: AUC = 0.8247328505001118, Accuracy = 0.7503384649753571
+Dataset 0 (balance-scale): AUC = 0.986111111111111, Accuracy = 0.8399999737739563
+Dataset 1 (breast-w): AUC = 1.0, Accuracy = 1.0
+Dataset 2 (cmc): AUC = 0.7671423641920536, Accuracy = 0.5920000076293945
+Dataset 3 (credit-g): AUC = 0.7424242424242424, Accuracy = 0.7120000123977661
+Dataset 4 (diabetes): AUC = 0.8357912648893931, Accuracy = 0.800000011920929
+Dataset 5 (tic-tac-toe): AUC = 0.7666666666666667, Accuracy = 0.6153846383094788
+Dataset 6 (eucalyptus): AUC = 0.8817167207792208, Accuracy = 0.5920000076293945
+Dataset 7 (pc1): AUC = 0.7513043478260869, Accuracy = 0.9200000166893005
+Dataset 8 (airlines): AUC = 0.6250643335048893, Accuracy = 0.6159999966621399
+Dataset 9 (jungle_chess_2pcs_raw_endgame_complete): AUC = 0.8911074536074536, Accuracy = 0.8159999847412109
+
+Method: random_forest, Average: AUC = 0.8287008033846632, Accuracy = 0.7439384639263154
+Dataset 0 (balance-scale): AUC = 0.9224537037037036, Accuracy = 0.800000011920929
+Dataset 1 (breast-w): AUC = 1.0, Accuracy = 1.0
+Dataset 2 (cmc): AUC = 0.7412649117618062, Accuracy = 0.5519999861717224
+Dataset 3 (credit-g): AUC = 0.7615039281705948, Accuracy = 0.7039999961853027
+Dataset 4 (diabetes): AUC = 0.8335224049914918, Accuracy = 0.7919999957084656
+Dataset 5 (tic-tac-toe): AUC = 0.7333333333333334, Accuracy = 0.6153846383094788
+Dataset 6 (eucalyptus): AUC = 0.8664933052097845, Accuracy = 0.6320000290870667
+Dataset 7 (pc1): AUC = 0.8447826086956522, Accuracy = 0.9279999732971191
+Dataset 8 (airlines): AUC = 0.6963458569222851, Accuracy = 0.6480000019073486
+Dataset 9 (jungle_chess_2pcs_raw_endgame_complete): AUC = 0.887307981057981, Accuracy = 0.7680000066757202
+
+Method: xgb, Average: AUC = 0.7810424086700396, Accuracy = 0.7340307712554932
+Dataset 0 (balance-scale): AUC = 0.8846450617283951, Accuracy = 0.7200000286102295
+Dataset 1 (breast-w): AUC = 1.0, Accuracy = 0.9230769276618958
+Dataset 2 (cmc): AUC = 0.7312678694666271, Accuracy = 0.5360000133514404
+Dataset 3 (credit-g): AUC = 0.6975308641975309, Accuracy = 0.6800000071525574
+Dataset 4 (diabetes): AUC = 0.8150879183210438, Accuracy = 0.7519999742507935
+Dataset 5 (tic-tac-toe): AUC = 0.5333333333333334, Accuracy = 0.7692307829856873
+Dataset 6 (eucalyptus): AUC = 0.86062641522741, Accuracy = 0.6320000290870667
+Dataset 7 (pc1): AUC = 0.7713043478260869, Accuracy = 0.9359999895095825
+Dataset 8 (airlines): AUC = 0.6309830159547092, Accuracy = 0.6079999804496765
+Dataset 9 (jungle_chess_2pcs_raw_endgame_complete): AUC = 0.8856452606452606, Accuracy = 0.7839999794960022

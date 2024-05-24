@@ -159,5 +159,5 @@ if __name__ == "__main__":
                 f"Method: {method}, Average: AUC = {auc_mean[i]}, Accuracy = {acc_mean[i]}\n")
             for j in range(0, len(cc_test_datasets_multiclass)):
                 eval_file.write(
-                    f"Dataset {j}: AUC = {auc[i][j]}, Accuracy = {acc[i][j]}\n")
+                    f"Dataset {j} ({cc_test_datasets_multiclass[j][0]}): AUC = {auc[i][j]}, Accuracy = {acc[i][j]}\n")
             eval_file.write("\n")
