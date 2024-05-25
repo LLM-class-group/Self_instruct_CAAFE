@@ -1,5 +1,7 @@
 # Self-Instruct CAAFE
 
+Our project is a combination of CAAFE’s basic method and the innovative Self-Instruct method.
+
 ### 项目结构
 
 - `caafe/`: 代码目录
@@ -18,4 +20,7 @@ seed = 42 & 24, metric = AUC
 | TabPFN        | 0.8117        | 0.8189 ± 0.0059    | 0.8232 ± 0.0045     | 0.8447 ± 0.0055        | 0.8595 ± 0.0093         |
 | Random Forest | 0.7836        | 0.8219 ± 0.0068    | 0.8167 ± 0.0115     | 0.8403 ± 0.0019        | 0.8561 ± 0.0038         |
 | XGBoost       | 0.7790        | 0.7862 ± 0.0052    | 0.8136 ± 0.0109     | 0.8039 ± 0.0054        | 0.8221 ± 0.0093         |
+
+### 流程图
+![Process Diagram](process.png)
 
