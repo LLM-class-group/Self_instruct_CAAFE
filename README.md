@@ -30,3 +30,9 @@ The mean AUC results of three different classifiers on 10 OpenML datasets, rando
 | TabPFN        | 0.8117        | 0.8189 ± 0.0059    | 0.8232 ± 0.0045     | 0.8447 ± 0.0055        | 0.8595 ± 0.0093         |
 | Random Forest | 0.7836        | 0.8219 ± 0.0068    | 0.8167 ± 0.0115     | 0.8403 ± 0.0019        | 0.8561 ± 0.0038         |
 | XGBoost       | 0.7790        | 0.7862 ± 0.0052    | 0.8136 ± 0.0109     | 0.8039 ± 0.0054        | 0.8221 ± 0.0093         |
+
+### Acknowledgement
+
+* We thank Muning Wen for valuable discussions on our work.
+* We thank the Apex Lab for providing us computing resources.
+* We thank the Meta Llama team for giving us access to their models, and open-source projects, including vLLM and LLaMA-Factory.
