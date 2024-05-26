@@ -4,7 +4,21 @@ Self-Instruct CAAFE is an enhanced approach of CAAFE which combines its foundati
 
 ### Usage
 
-coming soon
+#### Enable vLLM Server
+
+Run `./server.sh` or `./server-sft.sh`.
+
+#### Data Generation 
+
+Run `./run-main.sh true 1 1`.
+
+#### Supervised Fine-Tuning
+
+Run `./fineturn.sh` after configuring LLaMA-Factory.
+
+#### Evaluation
+
+Run `./evaluation.sh`.
 
 ### Project Structure
 
