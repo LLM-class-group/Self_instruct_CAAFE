@@ -6,6 +6,8 @@ This work is the course project of CS3308 Machine Learning, completed by [Yanhen
 
 ### Usage
 
+Note: You may need an RTX 3090 or better GPU to reproduce our project.
+
 #### Enable vLLM Server
 
 Run `./server.sh` or `./server-sft.sh`.
