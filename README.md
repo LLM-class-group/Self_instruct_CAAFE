@@ -2,7 +2,7 @@
 
 Self-Instruct CAAFE is an enhanced approach of CAAFE which combines its foundational principles with the innovative Self-Instruct method, achieving unprecedented automatic feature engineering performance.
 
-This work is the course project of CS3308 Machine Learning, completed by Yanheng He, Jiahe Jin and Yuxuan Zhang together. All members actively participated in every phase, including discussions, coding, experimentation, and poster production, each making equally significant contributions.
+This work is the course project of CS3308 Machine Learning, completed by [Yanheng He](https://github.com/HenryHe0123), [Jiahe Jin](https://github.com/zizi0123) and [Yuxuan Zhang](https://github.com/zyx11451) together. All members actively participated in every phase, including discussions, coding, experimentation, and poster production, each making equally significant contributions.
 
 ### Usage
 
